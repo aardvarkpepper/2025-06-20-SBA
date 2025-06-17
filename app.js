@@ -2,6 +2,8 @@ const formAddTask = document.getElementById('formAddTask');
 
 const hamsterwords = document.getElementById('hamsterwords');
 
+const date = new Date().toLocaleDateString();
+
 formAddTask.addEventListener('submit', (event) => {
   event.preventDefault();
   // Prevents page reloading, and arguments going to query strings in URL.  Work on a process that uses query strings too.
@@ -10,5 +12,5 @@ formAddTask.addEventListener('submit', (event) => {
   const category = formData.get('qscategory');
   const deadline = document.getElementById('deadline').value;
   const status = formData.get('qsstatus');
-  hamsterwords.textContent = `${task}, ${category}, ${deadline}, ${status}`;
+  hamsterwords.textContent = `${task}, ${category}, ${deadline}, ${status}; today's date is ${date}`;
 })
