@@ -1,15 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
   <form>
-    
+    <label for="taskname">Task Name</label>
+    <br>
+    <input type="text" id="taskname" name="jtaskname">
+    <br>
+    <label for="category">Category</label>
+    <br>
+    <input type="text" id="category" name="jcategory">
+    <br>
+    <label for="deadline">Deadline</label>
+    <br>
+    <input type="date" id="deadline" name="jdeadline">
+    <br>
+    <label for="taskstatus">Task Status</label>
+    <br>
+    <select id="taskstatus" name="jtaskstatus">
+      <option value="inprogress">In Progress</option>
+      <option value="complete">Complete</option>
+      <option value="overdue">Overdue</option>
+    </select>
+    <br>
+    <input type="submit" value="Add Task" />
   </form>
-  
+
 </body>
+
 </html>
+<!-- 
+
+
+add, update task status (In Progress, Completed, Overdue), autoupdate task status based on current date
+tasks past deadline Overdue
+filter tasks by status or category
+persist task data using local storage so tasks are saved even after refreshing package
+
+each task stored as object with properties. objects stored in array that holds all tasks
+create html structure (unorderd list or table) to display tasklist - each task shows
+task name, category, deadline, status.
+dynamically update task list in browser each time a new task is added or a status is updated.
+
+allow users to update the status of tasks (e.g. "in progress" or "completed") via a dropdown button
+autocheck each task deadline and mark overdue if current date has passed deadline
+update displayed task list whenever a task's status changes.
+
+add functionality to filter tasks by category or status. provide dropdown or set of buttns for users
+to choose a filter
+
+when a filter is selected only display tasks that match the selected category or status
+
+persisting task data with local storage - save current state of task list so tasks restored when
+page refreshed. Ensure task data stored and retrieved correctly.
+
+Use an array to store tasks, each represented as an object.
+Write functions to add tasks, update task status, check overdue tasks, and filter tasks.
+Use DOM manipulation to display the task list dynamically.
+Implement local storage to persist task data.
+
+Add multiple tasks and ensure they are displayed correctly.
+Test the “Update Status” functionality to ensure tasks can be marked as “Completed” or “Overdue.”
+Filter tasks by status or category and ensure the correct tasks are displayed.
+Refresh the page and ensure the tasks are restored from local storage.
+
+Keep your code modular: Use functions to organize your logic and make your code more readable and maintainable.
+Think about the user experience: Ensure that the task list is easy to read and that users receive clear feedback when
+updating or filtering tasks.
+
+Include a brief README.md explaining how the app works and any additional features you have implemented.
+
+Reflection: Write a short reflection (100-200 words) included within the repository discussing:
+
+Challenges faced during the project.
+How you approached solving those challenges.
+What you would improve if given more time -->
