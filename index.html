@@ -6,33 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="./style.css">
+
 </head>
 
 <body>
-  <form>
-    <label for="taskname">Task Name</label>
+  <form id="formAddTask">
+    <label for="task">Task Name</label>
     <br>
-    <input type="text" id="taskname" name="jtaskname">
+    <input type="text" id="task" name="qstask">
     <br>
     <label for="category">Category</label>
     <br>
-    <input type="text" id="category" name="jcategory">
+    <input type="text" id="category" name="qscategory">
     <br>
     <label for="deadline">Deadline</label>
     <br>
-    <input type="date" id="deadline" name="jdeadline">
+    <input type="date" id="deadline" name="qsdeadline">
     <br>
-    <label for="taskstatus">Task Status</label>
+    <label for="status">Task Status</label>
     <br>
-    <select id="taskstatus" name="jtaskstatus">
+    <select id="status" name="qsstatus">
       <option value="inprogress">In Progress</option>
       <option value="complete">Complete</option>
       <option value="overdue">Overdue</option>
     </select>
     <br>
-    <input type="submit" value="Add Task" />
+    <button type="submit">Smash</button>
   </form>
-
+  <p id="hamsterwords">I might say something.</p>
+  <script src="./app.js"></script>
 </body>
 
 </html>
