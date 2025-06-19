@@ -11,11 +11,11 @@ formAddTask.addEventListener('submit', (event) => {
   const formATData = new FormData(formAddTask);
   const task = formATData.get('qstask');
   const category = formATData.get('qscategory');
-  const deadline = formATData.get('deadline');
+  const deadline = new Date(formATData.get('qsdeadline'));
+  // Note:  If user leaves mm/dd/yyyy in date field, defaults to current date.
   const status = formATData.get('qsstatus');
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
-  // chinchillawords.textContent = `The task is overdue:  ${isTaskOverdue(deadline)} today's date ${today}`
 });
 
 
