@@ -16,7 +16,40 @@ formAddTask.addEventListener('submit', (event) => {
   const status = formATData.get('qsstatus');
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
+
+  const labels = formAddTask.querySelectorAll("label");
+
+  let tempString = "";
+  for (let i = 0; i < labels.length; i++) {
+    console.log(labels[i].textContent)
+    tempString += labels[i].textContent;
+  }
+
+  output2.textContent = `${tempString}`
 });
+// formAddTask.addEventListener
+
+const addTask = (task) => {
+  taskList.push(task);
+}
+
+const clearTable = () => {
+  taskTable.textContent="";
+}
+
+const addTableHeaders = () => {
+
+}
+
+const fillTable = (arrayOfTaskObjects) => {
+  if (arrayOfTaskObjects.length === 0) {
+    return;
+  }
+  let 
+  for (let i = 0; i < arrayOfTaskObjects.length; i++) {
+
+  }
+}
 
 
 
