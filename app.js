@@ -25,20 +25,21 @@ formAddTask.addEventListener('submit', (event) => {
     deadline: deadline,
     status: status,
   }
+  addTask(taskObject);
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
+
+  // when the button is pressed, it clears table and generates.
+
   clearTable();
   addTableHeaders();
-  addTableTask(taskObject);
+  for (let i = 0; i < taskList.length; i++) {
+    addTableTask(taskList[i]);
+  }
+  // clearTable();
+  // addTableHeaders();
+  // addTableTask(taskObject);
   
-
-  // let tempString = "";
-  // for (let i = 0; i < labels.length; i++) {
-  //   console.log(labels[i].textContent)
-  //   tempString += labels[i].textContent;
-  // }
-
-  // output2.textContent = `${tempString}`
 });
 // formAddTask.addEventListener
 
