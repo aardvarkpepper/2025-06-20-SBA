@@ -1,3 +1,7 @@
+/**
+ * Note:  Could store "type" of data in object.
+ */
+
 const formAddTask = document.getElementById('formAddTask');
 const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
@@ -15,10 +19,17 @@ formAddTask.addEventListener('submit', (event) => {
   const deadline = new Date(formATData.get('qsdeadline'));
   // Note:  If user leaves mm/dd/yyyy in date field, defaults to current date.
   const status = formATData.get('qsstatus');
+  const taskObject = {
+    task: task,
+    category: category,
+    deadline: deadline,
+    status: status,
+  }
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
-
+  clearTable();
   addTableHeaders();
+  addTableTask(taskObject);
   
 
   // let tempString = "";
@@ -40,17 +51,31 @@ const clearTable = () => {
 }
 
 const addTableHeaders = () => {
-  console.log("ath");
   const tableHeaderRow = document.createElement("tr");
-  console.log(`thr ${tableHeaderRow}`);
   for (let i = 0; i < labels.length; i++) {
-    console.log("iterate");
     const tableHeader = document.createElement("th");
     tableHeader.textContent = labels[i].textContent;
-    console.log(`textcontent, ${i}, ${tableHeader.textContent}`)
     tableHeaderRow.appendChild(tableHeader); 
   }
   taskTable.appendChild(tableHeaderRow);
+}
+
+const addTableTask = (taskObjectParameter) => {
+  console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
+  const tableRow = document.createElement("tr");
+  const tableData1 = document.createElement("td");
+  tableData1.textContent = taskObjectParameter.task;
+  tableRow.appendChild(tableData1);
+  const tableData2 = document.createElement("td");
+  tableData2.textContent = taskObjectParameter.category;
+  tableRow.appendChild(tableData2);
+  const tableData3 = document.createElement("td");
+  tableData3.textContent = taskObjectParameter.deadline;
+  tableRow.appendChild(tableData3);
+  const tableData4 = document.createElement("td");
+  tableData4.textContent = taskObjectParameter.status;
+  tableRow.appendChild(tableData4);
+  taskTable.appendChild(tableRow);
 }
 
 const fillTable = (arrayOfTaskObjects) => {
