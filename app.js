@@ -1,9 +1,13 @@
 const formAddTask = document.getElementById('formAddTask');
+const taskTable = document.getElementById('taskTable');
+const taskList = [];
+
+document.addEventListener("DOMContentLoaded", function() {
+  hamsterwords.textContent = "On load test successful";
+});
 
 const hamsterwords = document.getElementById('hamsterwords');
-
 const chinchillawords = document.getElementById('chinchillawords');
-
 const today = new Date();
 
 formAddTask.addEventListener('submit', (event) => {
@@ -19,6 +23,9 @@ formAddTask.addEventListener('submit', (event) => {
   hamsterwords.textContent = `${task}, ${category}, ${deadline}, ${status}`;
   chinchillawords.textContent = `The task is overdue:  ${isTaskOverdue(deadline)} today's date ${today}`
 })
+
+
+
 //in progress, complete, overdue
 //when is this called, really?  On button presses . . . but also when a list is pulled up.  
 // note:  use queryselector too.  but this DOES cause page to reload, doesn't it.
