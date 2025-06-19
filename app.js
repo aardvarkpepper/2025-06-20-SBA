@@ -1,4 +1,5 @@
 const formAddTask = document.getElementById('formAddTask');
+const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
 const taskList = [];
 
@@ -17,15 +18,16 @@ formAddTask.addEventListener('submit', (event) => {
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
 
-  const labels = formAddTask.querySelectorAll("label");
+  addTableHeaders();
+  
 
-  let tempString = "";
-  for (let i = 0; i < labels.length; i++) {
-    console.log(labels[i].textContent)
-    tempString += labels[i].textContent;
-  }
+  // let tempString = "";
+  // for (let i = 0; i < labels.length; i++) {
+  //   console.log(labels[i].textContent)
+  //   tempString += labels[i].textContent;
+  // }
 
-  output2.textContent = `${tempString}`
+  // output2.textContent = `${tempString}`
 });
 // formAddTask.addEventListener
 
@@ -38,7 +40,17 @@ const clearTable = () => {
 }
 
 const addTableHeaders = () => {
-
+  console.log("ath");
+  const tableHeaderRow = document.createElement("tr");
+  console.log(`thr ${tableHeaderRow}`);
+  for (let i = 0; i < labels.length; i++) {
+    console.log("iterate");
+    const tableHeader = document.createElement("th");
+    tableHeader.textContent = labels[i].textContent;
+    console.log(`textcontent, ${i}, ${tableHeader.textContent}`)
+    tableHeaderRow.appendChild(tableHeader); 
+  }
+  taskTable.appendChild(tableHeaderRow);
 }
 
 const fillTable = (arrayOfTaskObjects) => {
