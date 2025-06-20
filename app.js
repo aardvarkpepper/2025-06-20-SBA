@@ -1,5 +1,10 @@
 /**
- * Note:  Could store "type" of data in object.
+ * Note:  Could add entirely new fields to task.
+ * Store "type" of data in object, that data regulates whether there's a dropdown or not.
+ * e.g. "task" does not get dropdown but "category" and "status" do.
+ * But then, how to handle custom behaviors?
+ * e.g. we trigger task to "Overdue" if past current date.
+ * Could just leave date as the exception to the rule.
  */
 
 const formAddTask = document.getElementById('formAddTask');
@@ -44,8 +49,17 @@ formAddTask.addEventListener('submit', (event) => {
 // formAddTask.addEventListener
 
 const addTask = (task) => {
+  if (task.deadline == "Invalid Date") {
+    const today = new Date();
+    task.deadline = today;
+  }
+  if (isOverdue(task.deadline)) {
+    task.status="overdue";
+  }
   taskList.push(task);
 }
+
+// remember, change data on entry, and again on taking the array and outputting it to scrern.
 
 const clearTable = () => {
   taskTable.textContent="";
@@ -61,6 +75,33 @@ const addTableHeaders = () => {
   taskTable.appendChild(tableHeaderRow);
 }
 
+const convertStatusToString = (stringInput) => {
+  switch (stringInput) {
+    case "inprogress":
+      return "In Progress";
+    case "complete":
+      return "Complete";
+    case "overdue":
+      return "Overdue";
+    default:
+      return "Error:  convertStatusToString() input not inprogress, complete, or overdue."
+  }
+}
+
+const isOverdue = (dateInput) => {
+  const today = new Date();
+  console.log(`isOverdue; today: ${today}, taskdate: ${dateInput}`)
+  output2.textContent = `task: ${dateInput}, today: ${today}`;
+  if (today > dateInput) {
+    console.log(`isOverdue true`)
+    return true;
+  } else {
+    console.log(`isOverdue false`)
+    return false;
+  }
+}
+
+// Update this and have another function to update status based on deadline.
 const addTableTask = (taskObjectParameter) => {
   console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
   const tableRow = document.createElement("tr");
@@ -89,10 +130,13 @@ const fillTable = (arrayOfTaskObjects) => {
   }
 }
 
-
-
-
 /**
+ * Update status of tasks (completed, in progress, overdue) via dropdown or button
+ * auto update task status based on current date, mark as "Overdue" if current date past deadline.
+ * update task list whenever new task added or a status is updated.
+ * filter tasks by status or category
+ * 
+ * persist task data using local storage
  * 
  */
 
