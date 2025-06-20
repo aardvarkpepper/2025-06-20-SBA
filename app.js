@@ -35,12 +35,13 @@ formAddTask.addEventListener('submit', (event) => {
 
   // when the button is pressed, it clears table and generates.
 
-  clearTable();
-  addTableHeaders();
-  for (let i = 0; i < taskList.length; i++) {
-    addTableTask(taskList[i], i);
-  }
-  
+  // clearTable();
+  // addTableHeaders();
+  // for (let i = 0; i < taskList.length; i++) {
+  //   addTableTask(taskList[i], i);
+  // }
+  fillTable();
+
 });
 // formAddTask.addEventListener
 
@@ -50,15 +51,13 @@ const addTask = (task) => {
     task.deadline = today;
   }
   if (isOverdue(task.deadline)) {
-    task.status="overdue";
+    task.status = "overdue";
   }
   taskList.push(task);
 }
 
-// remember, change data on entry, and again on taking the array and outputting it to scrern.
-
 const clearTable = () => {
-  taskTable.textContent="";
+  taskTable.textContent = "";
 }
 
 const addTableHeaders = () => {
@@ -66,7 +65,7 @@ const addTableHeaders = () => {
   for (let i = 0; i < labels.length; i++) {
     const tableHeader = document.createElement("th");
     tableHeader.textContent = labels[i].textContent;
-    tableHeaderRow.appendChild(tableHeader); 
+    tableHeaderRow.appendChild(tableHeader);
   }
   taskTable.appendChild(tableHeaderRow);
 }
@@ -86,20 +85,15 @@ const convertStatusToString = (stringInput) => {
 
 const isOverdue = (dateInput) => {
   const today = new Date();
-  // console.log(`isOverdue; today: ${today}, taskdate: ${dateInput}`)
   output2.textContent = `task: ${dateInput}, today: ${today}`;
   if (today > dateInput) {
-    // console.log(`isOverdue true`)
     return true;
   } else {
-    // console.log(`isOverdue false`)
     return false;
   }
 }
 
-// Update this and have another function to update status based on deadline.
 const addTableTask = (taskObjectParameter, index) => {
-  // console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
   const tableRow = document.createElement("tr");
   const task = document.createElement("td");
   task.textContent = taskObjectParameter.task;
@@ -107,32 +101,29 @@ const addTableTask = (taskObjectParameter, index) => {
   const category = document.createElement("td");
   category.textContent = taskObjectParameter.category;
   tableRow.appendChild(category);
-  const deadline= document.createElement("td");
+  const deadline = document.createElement("td");
   deadline.textContent = taskObjectParameter.deadline;
   tableRow.appendChild(deadline);
   const status = document.createElement("td");
   if (isOverdue(taskObjectParameter.deadline)) {
     taskObjectParameter.status = "overdue";
-    tasklist[i].deadline="overdue";
+    tasklist[i].deadline = "overdue";
   }
   status.textContent = convertStatusToString(taskObjectParameter.status);
   tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
 }
 
-const fillTable = (arrayOfTaskObjects) => {
-  if (arrayOfTaskObjects.length === 0) {
-    return;
-  }
-  let 
-  for (let i = 0; i < arrayOfTaskObjects.length; i++) {
-
+const fillTable = () => {
+  clearTable();
+  addTableHeaders();
+  for (let i = 0; i < taskList.length; i++) {
+    addTableTask(taskList[i], i);
   }
 }
 
 /**
  * Update status of tasks (completed, in progress, overdue) via dropdown or button
- * auto update task status based on current date, mark as "Overdue" if current date past deadline.
  * update task list whenever new task added or a status is updated.
  * filter tasks by status or category
  * 
@@ -175,27 +166,6 @@ const task4 = {
 
 // localStorage.setItem("myData", taskList);
 
-// const apple = localStorage.getItem("myData");
-
-
-// const today = new Date();
 
 
 
-
-//in progress, complete, overdue
-//when is this called, really?  On button presses . . . but also when a list is pulled up.  
-// note:  use queryselector too.  but this DOES cause page to reload, doesn't it.
-
-// const isTaskOverdue = (deadline) => {
-//   const currentDate = new Date();
-//   console.log(`isTaskOverdue invoked.  Deadline: ${deadline}.  Current date: ${currentDate}`)
-//   return `placeholder`
-// }
-
-// const taskData = [
-// ];
-
-// const addTask = (taskObject) => {
-//   taskData.push(taskObject);
-// }
