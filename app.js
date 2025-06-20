@@ -103,7 +103,7 @@ const isOverdue = (dateInput) => {
 
 // Update this and have another function to update status based on deadline.
 const addTableTask = (taskObjectParameter) => {
-  console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
+  // console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
   const tableRow = document.createElement("tr");
   const task = document.createElement("td");
   task.textContent = taskObjectParameter.task;
@@ -115,7 +115,10 @@ const addTableTask = (taskObjectParameter) => {
   deadline.textContent = taskObjectParameter.deadline;
   tableRow.appendChild(deadline);
   const status = document.createElement("td");
-  status.textContent = taskObjectParameter.status;
+  if (isOverdue(taskObjectParameter.deadline)) {
+    taskObjectParameter.status = "overdue";
+  }
+  status.textContent = convertStatusToString(taskObjectParameter.status);
   tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
 }
