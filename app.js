@@ -39,7 +39,7 @@ formAddTask.addEventListener('submit', (event) => {
   clearTable();
   addTableHeaders();
   for (let i = 0; i < taskList.length; i++) {
-    addTableTask(taskList[i]);
+    addTableTask(taskList[i], i);
   }
   // clearTable();
   // addTableHeaders();
@@ -102,7 +102,7 @@ const isOverdue = (dateInput) => {
 }
 
 // Update this and have another function to update status based on deadline.
-const addTableTask = (taskObjectParameter) => {
+const addTableTask = (taskObjectParameter, index) => {
   // console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
   const tableRow = document.createElement("tr");
   const task = document.createElement("td");
@@ -117,6 +117,7 @@ const addTableTask = (taskObjectParameter) => {
   const status = document.createElement("td");
   if (isOverdue(taskObjectParameter.deadline)) {
     taskObjectParameter.status = "overdue";
+    tasklist[i].deadline="overdue";
   }
   status.textContent = convertStatusToString(taskObjectParameter.status);
   tableRow.appendChild(status);
