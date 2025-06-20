@@ -90,13 +90,13 @@ const convertStatusToString = (stringInput) => {
 
 const isOverdue = (dateInput) => {
   const today = new Date();
-  console.log(`isOverdue; today: ${today}, taskdate: ${dateInput}`)
+  // console.log(`isOverdue; today: ${today}, taskdate: ${dateInput}`)
   output2.textContent = `task: ${dateInput}, today: ${today}`;
   if (today > dateInput) {
-    console.log(`isOverdue true`)
+    // console.log(`isOverdue true`)
     return true;
   } else {
-    console.log(`isOverdue false`)
+    // console.log(`isOverdue false`)
     return false;
   }
 }
@@ -105,18 +105,18 @@ const isOverdue = (dateInput) => {
 const addTableTask = (taskObjectParameter) => {
   console.log(`${taskObjectParameter}, ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}`)
   const tableRow = document.createElement("tr");
-  const tableData1 = document.createElement("td");
-  tableData1.textContent = taskObjectParameter.task;
-  tableRow.appendChild(tableData1);
-  const tableData2 = document.createElement("td");
-  tableData2.textContent = taskObjectParameter.category;
-  tableRow.appendChild(tableData2);
-  const tableData3 = document.createElement("td");
-  tableData3.textContent = taskObjectParameter.deadline;
-  tableRow.appendChild(tableData3);
-  const tableData4 = document.createElement("td");
-  tableData4.textContent = taskObjectParameter.status;
-  tableRow.appendChild(tableData4);
+  const task = document.createElement("td");
+  task.textContent = taskObjectParameter.task;
+  tableRow.appendChild(task);
+  const category = document.createElement("td");
+  category.textContent = taskObjectParameter.category;
+  tableRow.appendChild(category);
+  const deadline= document.createElement("td");
+  deadline.textContent = taskObjectParameter.deadline;
+  tableRow.appendChild(deadline);
+  const status = document.createElement("td");
+  status.textContent = taskObjectParameter.status;
+  tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
 }
 
