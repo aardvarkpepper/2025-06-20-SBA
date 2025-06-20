@@ -22,7 +22,6 @@ formAddTask.addEventListener('submit', (event) => {
   const task = formATData.get('qstask');
   const category = formATData.get('qscategory');
   const deadline = new Date(formATData.get('qsdeadline'));
-  // Note:  If user leaves mm/dd/yyyy in date field, defaults to current date.
   const status = formATData.get('qsstatus');
   const taskObject = {
     task: task,
@@ -41,9 +40,6 @@ formAddTask.addEventListener('submit', (event) => {
   for (let i = 0; i < taskList.length; i++) {
     addTableTask(taskList[i], i);
   }
-  // clearTable();
-  // addTableHeaders();
-  // addTableTask(taskObject);
   
 });
 // formAddTask.addEventListener
