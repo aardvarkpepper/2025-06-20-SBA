@@ -92,14 +92,10 @@ const addTableHeaders = () => {
     const tableHeader = document.createElement("th");
     tableHeader.textContent = labels[i].textContent;
     tableHeaderRow.appendChild(tableHeader);
-    if (true) {
-      const dropdown1 = document.createElement("select");
-
-      //status
-    };
-    if (true) {
-      //category
-    };
+    if (labels[i].textContent === "Category") {
+      const mrDrop = createDropdown(["One, Two, Three"]);
+      tableHeader.appendChild(mrDrop);
+    }
   }
   taskTable.appendChild(tableHeaderRow);
 }
@@ -108,8 +104,9 @@ const createDropdown = (arrayInput) => {
   const dropdown = document.createElement("select");
   for (let i = 0; i < arrayInput.length; i++) {
     const option = document.createElement("option");
-
+    option.value = arrayInput[i];
   }
+  return dropdown;
 }
 
 const convertStatusToString = (stringInput) => {
