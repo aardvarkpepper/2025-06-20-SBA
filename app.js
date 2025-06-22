@@ -31,7 +31,7 @@ formAddTask.addEventListener('submit', (event) => {
     status: status,
   }
   addTask(taskObject);
-    console.log(`status: ${status}`);
+  console.log(`status: ${status}`);
   console.log(`tasklist, ${JSON.stringify(tasklist)}`)
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
@@ -72,7 +72,7 @@ const clearTable = () => {
 const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   const returnObject = {};
   for (let i = 0; i < arrayKeyInputs.length; i++) {
-    returnObject[[arrayKeyInputs[i]]] = new Set ();
+    returnObject[[arrayKeyInputs[i]]] = new Set();
   }
   for (let i = 0; i < arrayKeyInputs.length; i++) {
     for (let j = 0; j < arrayInput.length; j++) {
@@ -92,8 +92,12 @@ const addTableHeaders = () => {
     const tableHeader = document.createElement("th");
     tableHeader.textContent = labels[i].textContent;
     tableHeaderRow.appendChild(tableHeader);
+
+    //{status: [arrayofstatuses], category: [[arrayofcategories]]}
+    const mrObject = getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"]);
+    console.log(`mrObject; category ${mrObject.category}; status ${mrObject.status}`)
     if (labels[i].textContent === "Category") {
-      const mrDrop = createDropdown(["One", "Two", "Three"]);
+      const mrDrop = createDropdown(mrObject.category);
       tableHeader.appendChild(mrDrop);
     }
   }
@@ -130,25 +134,24 @@ const createDropdown = (arrayInput) => {
   return dropdown;
 }
 
-const convertStatusToString = (stringInput) => {
-  switch (stringInput) {
-    case "inprogress":
-      return "In Progress";
-    case "complete":
-      return "Complete";
-    case "overdue":
-      return "Overdue";
-    case "In Progress":
-      return "In Progress";
-    case "Complete":
-      return "Complete";
-    case "Overdue":
-      return "Overdue";
-    default:
-      return "Error:  convertStatusToString() input not inprogress, complete, or overdue."
-  }
-}
-
+// const convertStatusToString = (stringInput) => {
+//   switch (stringInput) {
+//     case "inprogress":
+//       return "In Progress";
+//     case "complete":
+//       return "Complete";
+//     case "overdue":
+//       return "Overdue";
+//     case "In Progress":
+//       return "In Progress";
+//     case "Complete":
+//       return "Complete";
+//     case "Overdue":
+//       return "Overdue";
+//     default:
+//       return "Error:  convertStatusToString() input not inprogress, complete, or overdue."
+//   }
+// }
 
 const isOverdue = (dateInput) => {
   const today = new Date();
