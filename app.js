@@ -43,9 +43,14 @@ formAddTask.addEventListener('submit', (event) => {
   // for (let i = 0; i < tasklist.length; i++) {
   //   addTableTask(tasklist[i], i);
   // }
-  fillTable();
+  fillTable(tasklist);
   // console.log(JSON.stringify(getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"])))
 
+
+  /**
+   * Now, I shall change this from console log to an onchange listener that fills table 
+   * with filtered list.
+   */
    console.log(`Filtered output for status overdue and category work ${getFilteredArray(tasklist, [{ status: "Overdue" }, { category: "Work" }])}`);
 });
 // formAddTask.addEventListener
@@ -104,11 +109,11 @@ const addTableHeaders = () => {
     console.log(`mrObject; category ${mrObject.category}; status ${mrObject.status}`)
     // note:  change this to work dynamically.  
     if (labels[i].textContent === "Category") {
-      const mrDrop = createDropdown(mrObject.category);
+      const mrDrop = createDropdown(mrObject.category, "category");
       tableHeader.appendChild(mrDrop);
     }
     if (labels[i].textContent === "Task Status") {
-      const mrDrop = createDropdown(mrObject.status);
+      const mrDrop = createDropdown(mrObject.status, "status");
       tableHeader.appendChild(mrDrop);
     }
   }
@@ -123,7 +128,7 @@ const addTableHeaders = () => {
 //   });
 // }
 
-const createDropdown = (arrayInput) => {
+const createDropdown = (arrayInput, type) => {
   const dropdown = document.createElement("select");
   // dropdown.multiple = "multiple"
   const all = document.createElement("option");
@@ -149,6 +154,20 @@ const createDropdown = (arrayInput) => {
     /**
      * so right now I write something that takes . . .
      */
+    // it's an additive filter so any "All" means all.
+    if (event.target.value === "All") {
+      fillTable(tasklist)
+    } else {
+      console.log("INVOKING");
+      const arrayOfFilterObjects = [];
+      arrayOfFilterObjects.push({[type]: event.target.value});
+      console.log(`INVOKING; ${JSON.stringify(arrayOfFilterObjects)}`);
+
+      //   console.log(`Filtered output for status overdue and category work 
+      // ${getFilteredArray(tasklist, [{ status: "Overdue" }, { category: "Work" }])}`);
+      fillTable(getFilteredArray(tasklist, arrayOfFilterObjects))
+
+    }
   });
   return dropdown;
 }
@@ -252,11 +271,11 @@ const addTableTask = (taskObjectParameter, index) => {
   taskTable.appendChild(tableRow);
 }
 
-const fillTable = () => {
+const fillTable = (arrayOfTaskObjects) => {
   clearTable();
   addTableHeaders();
-  for (let i = 0; i < tasklist.length; i++) {
-    addTableTask(tasklist[i], i);
+  for (let i = 0; i < arrayOfTaskObjects.length; i++) {
+    addTableTask(arrayOfTaskObjects[i], i);
   }
 }
 
