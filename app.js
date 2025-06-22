@@ -96,8 +96,13 @@ const addTableHeaders = () => {
     //{status: [arrayofstatuses], category: [[arrayofcategories]]}
     const mrObject = getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"]);
     console.log(`mrObject; category ${mrObject.category}; status ${mrObject.status}`)
+    // note:  change this to work dynamically.  
     if (labels[i].textContent === "Category") {
       const mrDrop = createDropdown(mrObject.category);
+      tableHeader.appendChild(mrDrop);
+    }
+    if (labels[i].textContent === "Task Status") {
+      const mrDrop = createDropdown(mrObject.status);
       tableHeader.appendChild(mrDrop);
     }
   }
