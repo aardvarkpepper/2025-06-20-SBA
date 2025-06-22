@@ -18,3 +18,4 @@ https://www.w3schools.com/js/js_switch.asp
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 https://www.w3schools.com/js/js_sets.asp
+https://www.geeksforgeeks.org/javascript/how-to-convert-set-to-array-in-javascript/

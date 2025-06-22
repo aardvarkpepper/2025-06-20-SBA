@@ -64,7 +64,8 @@ const clearTable = () => {
 // function to go through the array of objects to get all unique statuses and categories
 // sample arrayInput[{status: x, category: y},{status: x, category y}...]
 // sample arrayKeyInputs: ["status", "category"]
-// sample output {status: Set of statuses, category: Set of categories}
+// sample intermediate set {status: Set of statuses, category: Set of categories}
+// sample output:  {status: [arrayofstatuses], category: [[arrayofcategories]]}
 const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   const returnObject = {};
   for (let i = 0; i < arrayKeyInputs.length; i++) {
@@ -72,8 +73,12 @@ const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   }
   for (let i = 0; i < arrayKeyInputs.length; i++) {
     for (let j = 0; j < arrayInput.length; j++) {
-      returnObject[[arrayKeyInputs[i]]].add(arrayInput[arrayKeyInputs[j]]);
+      console.log(`Attempting to add to ${returnObject[[arrayKeyInputs[i]]]} ${arrayInput[arrayKeyInputs[j]]}`)
+      returnObject[[arrayKeyInputs[i]]].add(arrayInput[j][arrayKeyInputs[i]]);
     }
+  }
+  for (let i = 0; i < arrayKeyInputs.length; i++) {
+    returnObject[[arrayKeyInputs[i]]] = [...returnObject[[arrayKeyInputs[i]]]];
   }
   return returnObject;
 }
