@@ -240,6 +240,14 @@ tasklist.push(task4);
 
 // localStorage.setItem("myData", tasklist);
 
+/**
+ * To do:
+ * 
+ * Update the status of tasks to reflect their progress (e.g., “In Progress,” “Completed,” “Overdue”).
+ * via dropdown or button.  Tasklist should update when this is done.
+ * Persist task data using local storage so tasks are saved even after refreshing the page.
+ */
+
 
 
 

@@ -1,3 +1,21 @@
+## Reflection
+
+1.  Challenges faced during the project.
+   
+Most of the challenge I faced during the project was repeatedly rewriting code to be less dynamic and include less features as I ran short of time.  Some bits of code expanded, others shrank, everything was in flux.  As it is, I did a lot of things with needlessly dynamic code, though I expect I'll revisit the project to make it a personal reference work.
+
+2.  How you approached solving those challenges.
+
+Mostly I solved challenges through methodical tracking down of issues using console.log and thinking through control flow.  It bears mentioning this isn't great when time is quite limited, and may be avoided by having very clear ideas of what specifically will be built before starting writing any code.  Also bears mentioning it all worked out in the end.
+  
+3.  What you would improve if given more time.
+
+CSS styling, and control flow, addition of fields per task, customization of dropdowns.  A lot of the structure's already in there to support a lot of that.
+
+Control flow's a little odd.  If I filter a list for multiple categories, then it makes sense I want to view all items that are in one of those categories.  If I filter a list for multiple categories and multiple statuses, though, do I want items that are in one of those categories *or* one of those statuses?  Or do I want items that are in one of those categories *and* one of those statuses?  How do I even represent that in filter terms, where the user doesn't have to reference logic tables and can enter filter commands with ease?  Had I some more time, I think I'd look at how spreadsheets use filters some more, see how they handle it.
+
+Probably have to make a standalone field to hold / edit filter queries too, come to think on it.  Especially if I allow users to add custom fields to tasks.
+
 ## Resources
 
 https://www.w3schools.com/jsref/jsref_includes.asp
