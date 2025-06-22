@@ -22,7 +22,7 @@ formAddTask.addEventListener('submit', (event) => {
   const task = formATData.get('qstask');
   const category = formATData.get('qscategory');
   const deadline = new Date(formATData.get('qsdeadline'));
-  const status = formATData.get('qsstatus');
+  const status = convertStatusToString(formATData.get('qsstatus'));
   const taskObject = {
     task: task,
     category: category,
@@ -30,6 +30,8 @@ formAddTask.addEventListener('submit', (event) => {
     status: status,
   }
   addTask(taskObject);
+    console.log(`status: ${status}`);
+  console.log(`tasklist, ${JSON.stringify(tasklist)}`)
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
 
@@ -52,7 +54,7 @@ const addTask = (task) => {
     task.deadline = today;
   }
   if (isOverdue(task.deadline)) {
-    task.status = "overdue";
+    task.status = "Overdue";
   }
   tasklist.push(task);
 }
@@ -73,7 +75,6 @@ const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   }
   for (let i = 0; i < arrayKeyInputs.length; i++) {
     for (let j = 0; j < arrayInput.length; j++) {
-      console.log(`Attempting to add to ${returnObject[[arrayKeyInputs[i]]]} ${arrayInput[arrayKeyInputs[j]]}`)
       returnObject[[arrayKeyInputs[i]]].add(arrayInput[j][arrayKeyInputs[i]]);
     }
   }
@@ -110,11 +111,16 @@ const convertStatusToString = (stringInput) => {
       return "Complete";
     case "overdue":
       return "Overdue";
+    case "In Progress":
+      return "In Progress";
+    case "Complete":
+      return "Complete";
+    case "Overdue":
+      return "Overdue";
     default:
       return "Error:  convertStatusToString() input not inprogress, complete, or overdue."
   }
 }
-
 
 
 const isOverdue = (dateInput) => {
@@ -140,9 +146,10 @@ const addTableTask = (taskObjectParameter, index) => {
   tableRow.appendChild(deadline);
   const status = document.createElement("td");
   if (isOverdue(taskObjectParameter.deadline)) {
-    taskObjectParameter.status = "overdue";
-    tasklist[index].deadline = "overdue";
+    taskObjectParameter.status = "Overdue";
+    tasklist[index].deadline = "Overdue";
   }
+
   // add button to make dropdown (requires two clicks).  Radio buttons would be faster (one click)
   // but takes up space and perhaps goes against convention.
   // besides implementing a button and dropdown requires a bit more work so is more interesting.
@@ -171,28 +178,28 @@ const task1 = {
   task: "hamster care",
   category: "Work",
   deadline: "2025-06-19",
-  status: "inprogress",
+  status: "In Progress",
 };
 
 const task2 = {
   task: "past care",
   category: "Pastries",
   deadline: "2024-01-02",
-  status: "overdue",
+  status: "Overdue",
 };
 
 const task3 = {
   task: "hamster care",
   category: "Work",
   deadline: "2028-11-12",
-  status: "overdue",
+  status: "Overdue",
 };
 
 const task4 = {
   task: "Past Care",
   category: "Duplicates",
   deadline: "2025-06-19",
-  status: "complete",
+  status: "Complete",
 };
 
 tasklist.push(task1);
