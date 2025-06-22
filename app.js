@@ -31,8 +31,8 @@ formAddTask.addEventListener('submit', (event) => {
     status: status,
   }
   addTask(taskObject);
-  console.log(`status: ${status}`);
-  console.log(`tasklist, ${JSON.stringify(tasklist)}`)
+  // console.log(`status: ${status}`);
+  // console.log(`tasklist, ${JSON.stringify(tasklist)}`)
 
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
 
@@ -44,8 +44,9 @@ formAddTask.addEventListener('submit', (event) => {
   //   addTableTask(tasklist[i], i);
   // }
   fillTable();
-  console.log(JSON.stringify(getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"])))
+  // console.log(JSON.stringify(getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"])))
 
+   console.log(`Filtered output for status overdue and category work ${getFilteredArray(tasklist, [{ status: "Overdue" }, { category: "Work" }])}`);
 });
 // formAddTask.addEventListener
 
@@ -84,6 +85,11 @@ const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   }
   return returnObject;
 }
+
+/**
+ * Input:  tasklis [{task: "ham",  .. . }, { . .. }]
+ * array of items to filter [""]
+ */
 
 // add filters to status and category
 const addTableHeaders = () => {
@@ -130,14 +136,64 @@ const createDropdown = (arrayInput) => {
     option.value = arrayInput[i];
     option.textContent = arrayInput[i];
     dropdown.appendChild(option);
-    console.log(`Iteration ${i} value ${arrayInput[i]}`)
+    // console.log(`Iteration ${i} value ${arrayInput[i]}`)
   }
   dropdown.addEventListener('change', (event) => {
     const selectedValue = event.target.value;
     console.log(`Dropdown AEL activated; current selected value ${selectedValue}`);
+    // this should repopulate the field with clear, addtableheaders,
+    // addtabletask (taskobjectparameter, index)
+    // so what am I keeping track of?  Well, I want to run potentially multiple filters
+    // on the tasklist, get all the task objects that fit the specification, then keep track of
+    // the index numbers.  I pop those index numbers in an array, then iterate calling addtabletask
+    /**
+     * so right now I write something that takes . . .
+     */
   });
   return dropdown;
 }
+
+/**
+ * Takes tasklistInput (the full tasklist) and applies filters.
+ * arrayOfObjects like [{status: ["Complete", "In Progress"]}, {category:  ["hamster", "gerbil"]}
+ * Iterates through and selects all statuses that are complete OR in progress AND
+ * that ALSO have category "hamster" or "gerbil".
+ * This is sort of not great, as user doesn't have control.  Maybe they want all tasks that are this
+ * OR that.  Well, I'll leave that for now; I know I can do it, but would have to put in more
+ * controls that exceed assignment requirements.
+ * Would have to restructure it so user can say ((P AND Q) OR R) AND S, that sort of thing.
+ * At any rate, THIS function is an additive filter; if ANY of them is true then it selects.
+ * 
+ */
+const getFilteredArray = (tasklistInput, arrayOfObjects) => {
+  const setOfIndices = new Set();
+  const filteredArray = [];
+  for (let i = 0; i < tasklistInput.length; i++) {
+    for (let j = 0; j < arrayOfObjects.length; j++) {
+      const filter = Object.keys(arrayOfObjects[j]);
+      const filterArray = arrayOfObjects[j][filter];
+      console.log(`GFA running.  Searching key ${filter} for filterArray ${filterArray}`)
+      for (let k = 0; k < filterArray.length; k++) {
+        console.log(`GFA running.  K loop ${tasklistInput[i][filter]} and ${arrayOfObjects[j][filter]}`)
+        if (tasklistInput[i][filter] == arrayOfObjects[j][filter]) {
+          console.log(`Match found.`);
+          setOfIndices.add(i);
+        }
+      }
+      //console.log(`Filter substep ${j} key name ${Object.keys(arrayOfObjects[j])}`)
+
+    }
+  }
+  // for (each of setOfIndices) {
+  //   console.log(`SOI ${each}`)
+  // }
+  // console.log(`Filtered array: ${JSON.stringify(filteredArray)}`);
+  for (each of setOfIndices) {
+    filteredArray.push(tasklistInput[each]);
+  }
+  console.log(`GFA output ${JSON.stringify(filteredArray)}`)
+  return filteredArray;
+};
 
 // const convertStatusToString = (stringInput) => {
 //   switch (stringInput) {
