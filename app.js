@@ -10,7 +10,7 @@
 const formAddTask = document.getElementById('formAddTask');
 const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
-const taskList = [];
+const tasklist = [];
 
 const output1 = document.getElementById('output1');
 const output2 = document.getElementById('output2');
@@ -37,10 +37,11 @@ formAddTask.addEventListener('submit', (event) => {
 
   // clearTable();
   // addTableHeaders();
-  // for (let i = 0; i < taskList.length; i++) {
-  //   addTableTask(taskList[i], i);
+  // for (let i = 0; i < tasklist.length; i++) {
+  //   addTableTask(tasklist[i], i);
   // }
   fillTable();
+  console.log(JSON.stringify(getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"])))
 
 });
 // formAddTask.addEventListener
@@ -53,19 +54,45 @@ const addTask = (task) => {
   if (isOverdue(task.deadline)) {
     task.status = "overdue";
   }
-  taskList.push(task);
+  tasklist.push(task);
 }
 
 const clearTable = () => {
   taskTable.textContent = "";
 }
 
+// function to go through the array of objects to get all unique statuses and categories
+// sample arrayInput[{status: x, category: y},{status: x, category y}...]
+// sample arrayKeyInputs: ["status", "category"]
+// sample output {status: Set of statuses, category: Set of categories}
+const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
+  const returnObject = {};
+  for (let i = 0; i < arrayKeyInputs.length; i++) {
+    returnObject[[arrayKeyInputs[i]]] = new Set ();
+  }
+  for (let i = 0; i < arrayKeyInputs.length; i++) {
+    for (let j = 0; j < arrayInput.length; j++) {
+      returnObject[[arrayKeyInputs[i]]].add(arrayInput[arrayKeyInputs[j]]);
+    }
+  }
+  return returnObject;
+}
+
+// add filters to status and category
 const addTableHeaders = () => {
   const tableHeaderRow = document.createElement("tr");
   for (let i = 0; i < labels.length; i++) {
     const tableHeader = document.createElement("th");
     tableHeader.textContent = labels[i].textContent;
     tableHeaderRow.appendChild(tableHeader);
+    if (true) {
+      const dropdown1 = document.createElement("select");
+
+      //status
+    };
+    if (true) {
+      //category
+    };
   }
   taskTable.appendChild(tableHeaderRow);
 }
@@ -82,6 +109,8 @@ const convertStatusToString = (stringInput) => {
       return "Error:  convertStatusToString() input not inprogress, complete, or overdue."
   }
 }
+
+
 
 const isOverdue = (dateInput) => {
   const today = new Date();
@@ -107,8 +136,13 @@ const addTableTask = (taskObjectParameter, index) => {
   const status = document.createElement("td");
   if (isOverdue(taskObjectParameter.deadline)) {
     taskObjectParameter.status = "overdue";
-    tasklist[i].deadline = "overdue";
+    tasklist[index].deadline = "overdue";
   }
+  // add button to make dropdown (requires two clicks).  Radio buttons would be faster (one click)
+  // but takes up space and perhaps goes against convention.
+  // besides implementing a button and dropdown requires a bit more work so is more interesting.
+  // remember when status updated to update data and to update task list.  But aren't we doing this anyways?
+
   status.textContent = convertStatusToString(taskObjectParameter.status);
   tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
@@ -117,15 +151,12 @@ const addTableTask = (taskObjectParameter, index) => {
 const fillTable = () => {
   clearTable();
   addTableHeaders();
-  for (let i = 0; i < taskList.length; i++) {
-    addTableTask(taskList[i], i);
+  for (let i = 0; i < tasklist.length; i++) {
+    addTableTask(tasklist[i], i);
   }
 }
 
 /**
- * Update status of tasks (completed, in progress, overdue) via dropdown or button
- * update task list whenever new task added or a status is updated.
- * filter tasks by status or category
  * 
  * persist task data using local storage
  * 
@@ -135,36 +166,42 @@ const task1 = {
   task: "hamster care",
   category: "Work",
   deadline: "2025-06-19",
-  status: "Complete",
+  status: "inprogress",
 };
 
 const task2 = {
   task: "past care",
   category: "Pastries",
   deadline: "2024-01-02",
-  status: "Incomplete",
+  status: "overdue",
 };
 
 const task3 = {
-  task: "future care",
-  category: "Futurama",
+  task: "hamster care",
+  category: "Work",
   deadline: "2028-11-12",
-  status: "In Progress",
+  status: "overdue",
 };
 
 const task4 = {
   task: "Past Care",
   category: "Duplicates",
   deadline: "2025-06-19",
-  status: "In Progress",
+  status: "complete",
 };
+
+tasklist.push(task1);
+tasklist.push(task2);
+tasklist.push(task3);
+tasklist.push(task4);
+
 
 
 // document.addEventListener("DOMContentLoaded", function() {
 //   // hamsterwords.textContent = "On load test successful";
 // });
 
-// localStorage.setItem("myData", taskList);
+// localStorage.setItem("myData", tasklist);
 
 
 
