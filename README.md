@@ -19,3 +19,5 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Prop
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 https://www.w3schools.com/js/js_sets.asp
 https://www.geeksforgeeks.org/javascript/how-to-convert-set-to-array-in-javascript/
+https://www.w3schools.com/tags/att_select_multiple.asp
+https://www.w3schools.com/jsref/event_onchange.asp

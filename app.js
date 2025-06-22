@@ -93,19 +93,40 @@ const addTableHeaders = () => {
     tableHeader.textContent = labels[i].textContent;
     tableHeaderRow.appendChild(tableHeader);
     if (labels[i].textContent === "Category") {
-      const mrDrop = createDropdown(["One, Two, Three"]);
+      const mrDrop = createDropdown(["One", "Two", "Three"]);
       tableHeader.appendChild(mrDrop);
     }
   }
   taskTable.appendChild(tableHeaderRow);
 }
 
+// const addOptionEventListener = (optionElement) => {
+//   console.log("aOEL invoked");
+//   optionElement.addEventListener('click', (event) => {
+//     const option = event.target;
+//     console.log(`option value: ${option.value}`);
+//   });
+// }
+
 const createDropdown = (arrayInput) => {
   const dropdown = document.createElement("select");
+  // dropdown.multiple = "multiple"
+  const all = document.createElement("option");
+  all.value = "All";
+  all.textContent = "All";
+  // addOptionEventListener(all);
+  dropdown.appendChild(all);
   for (let i = 0; i < arrayInput.length; i++) {
     const option = document.createElement("option");
     option.value = arrayInput[i];
+    option.textContent = arrayInput[i];
+    dropdown.appendChild(option);
+    console.log(`Iteration ${i} value ${arrayInput[i]}`)
   }
+  dropdown.addEventListener('change', (event) => {
+    const selectedValue = event.target.value;
+    console.log(`Dropdown AEL activated; current selected value ${selectedValue}`);
+  });
   return dropdown;
 }
 
