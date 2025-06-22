@@ -22,7 +22,8 @@ formAddTask.addEventListener('submit', (event) => {
   const task = formATData.get('qstask');
   const category = formATData.get('qscategory');
   const deadline = new Date(formATData.get('qsdeadline'));
-  const status = convertStatusToString(formATData.get('qsstatus'));
+  const status = formATData.get('qsstatus');
+  //const status = convertStatusToString(formATData.get('qsstatus'));
   const taskObject = {
     task: task,
     category: category,
@@ -103,6 +104,14 @@ const addTableHeaders = () => {
   taskTable.appendChild(tableHeaderRow);
 }
 
+const createDropdown = (arrayInput) => {
+  const dropdown = document.createElement("select");
+  for (let i = 0; i < arrayInput.length; i++) {
+    const option = document.createElement("option");
+
+  }
+}
+
 const convertStatusToString = (stringInput) => {
   switch (stringInput) {
     case "inprogress":
@@ -155,7 +164,8 @@ const addTableTask = (taskObjectParameter, index) => {
   // besides implementing a button and dropdown requires a bit more work so is more interesting.
   // remember when status updated to update data and to update task list.  But aren't we doing this anyways?
 
-  status.textContent = convertStatusToString(taskObjectParameter.status);
+  //status.textContent = convertStatusToString(taskObjectParameter.status);
+  status.textContent = taskObjectParameter.status;
   tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
 }
