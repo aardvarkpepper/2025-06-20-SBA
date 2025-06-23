@@ -1,9 +1,9 @@
 const formAddTask = document.getElementById('formAddTask');
 const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
-const tasklist = [];
-const filterStates = {task: "All", category: "All"};
-const filterStates2 = {task: "", category: ""};
+let tasklist = [];
+let filterStates = {task: "All", category: "All"};
+let filterStates2 = {task: "", category: ""};
 
 const output1 = document.getElementById('output1');
 const output2 = document.getElementById('output2');
@@ -25,8 +25,27 @@ formAddTask.addEventListener('submit', (event) => {
   addTask(taskObject);
   output1.textContent = `${task}, ${category}, ${deadline}, ${status}`;
   fillTable(tasklist);
+  saveData();
 });
 // formAddTask.addEventListener
+
+const saveData = () => {
+  localStorage.setItem("tasklist", JSON.stringify(tasklist));
+  localStorage.setItem("filterStates", JSON.stringify(filterStates));
+  localStorage.setItem("filterStates2", JSON.stringify(filterStates2));
+}
+
+const retrieveData = () => {
+  if (localStorage.getItem("tasklist")) {
+    tasklist = JSON.parse(localStorage.getItem("tasklist"));
+  }
+  if (localStorage.getItem("filterStates")) {
+    filterStates = JSON.parse(localStorage.getItem("filterStates"));
+  }
+  if (localStorage.getItem("filterStates2")) {
+    filterStates2 = JSON.parse(localStorage.getItem("filterStates2"));
+  }
+}
 
 const addTask = (task) => {
   if (task.deadline == "Invalid Date") {
@@ -37,6 +56,7 @@ const addTask = (task) => {
     task.status = "Overdue";
   }
   tasklist.push(task);
+  saveData();
 }
 
 const clearTable = () => {
@@ -116,6 +136,7 @@ const createDropdown = (arrayInput, type, defaultOption="All") => {
 
     if (event.target.value === "All") {
       fillTable(tasklist)
+      saveData();
     } else {
       console.log("INVOKING");
       const arrayOfFilterObjects = [];
@@ -123,6 +144,7 @@ const createDropdown = (arrayInput, type, defaultOption="All") => {
       console.log(`INVOKING; ${JSON.stringify(arrayOfFilterObjects)}`);
 
       fillTable(getFilteredArray(tasklist, arrayOfFilterObjects))
+      saveData();
 
     }
   });
@@ -154,6 +176,7 @@ const createDropdown2 = (arrayInput, columnName, index) => {
     const dropdown2value = event.target.value;
     tasklist[index].status = dropdown2value;
     fillTable(tasklist);
+    saveData();
   })
   return dropdown2;
 }
@@ -178,6 +201,7 @@ const getFilteredArray = (tasklistInput, arrayOfObjects) => {
     filteredArray.push(tasklistInput[each]);
   }
   console.log(`GFA output ${JSON.stringify(filteredArray)}`)
+  saveData();
   return filteredArray;
 };
 
@@ -216,6 +240,7 @@ const addTableTask = (taskObjectParameter, index) => {
     }
     taskObjectParameter.status = "Overdue";
     tasklist[index].status = "Overdue";
+    saveData();
   }
   console.log(`Attempting to generate for ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}.`);
   status.textContent = taskObjectParameter.status;
@@ -237,9 +262,6 @@ const fillTable = (arrayOfTaskObjects) => {
 }
 
 /**
- * fix date issue - new inputs correctly update status to overdue if past date.
- * But first, if it is entered as "Complete", will toggle to "Overdue".  No good.
- * Second, existing datad oes not update.
  * persist task data using local storage
  * 
  */
@@ -278,8 +300,9 @@ tasklist.push(task3);
 tasklist.push(task4);
 
 
-
+// Runs contents on page load.
 document.addEventListener("DOMContentLoaded", function() {
+  retrieveData();
   fillTable(tasklist);
   // hamsterwords.textContent = "On load test successful";
 });
