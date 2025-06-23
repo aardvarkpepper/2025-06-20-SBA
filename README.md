@@ -1,20 +1,26 @@
 ## Reflection
 
 1.  Challenges faced during the project.
-   
-Most of the challenge I faced during the project was repeatedly rewriting code to be less dynamic and include less features as I ran short of time.  Some bits of code expanded, others shrank, everything was in flux.  As it is, I did a lot of things with needlessly dynamic code, though I expect I'll revisit the project to make it a personal reference work.
+
+I originally designed the product to be fully dynamic with ability to add new fields for each task, and a more expansive feature set.  However, some time into the project, features were taking longer to implement and debug than I thought, so I changed the design to be less dynamic with less features.  This in turn had me writing code that wasn't particularly well planned, with pieces fitting together in ways different to what I'd originally considered, causing new issues to pop up.  Being in a bit of a rush, I ended up taking more time debugging than should have been necessary.
+
+I expect I'll revisit the project in time.  I'll have to change the original specifications to account for extensive user filter combinations of "and" and "or", and rethink how information may be simply shown (e.g. massive dropdowns if lots of categories), changing categories to accept multiple arguments with inputs separated by commas, generally integrating spreadsheet and email features and trying to design unique characteristics that make the tasklist project distinct to either.  
 
 2.  How you approached solving those challenges.
 
-Mostly I solved challenges through methodical tracking down of issues using console.log and thinking through control flow.  It bears mentioning this isn't great when time is quite limited, and may be avoided by having very clear ideas of what specifically will be built before starting writing any code.  Also bears mentioning it all worked out in the end.
+I regularly tested code - too frequently, perhaps; in retrospect I think it would have been better to take more time thoroughly planning in the beginning, then writing and testing components as a whole, rather than every few lines of components.  When running into emergent issues, I'd use console.log to compare actual to expected to track down issues.
   
 3.  What you would improve if given more time.
 
-CSS styling, and control flow, addition of fields per task, customization of dropdowns.  A lot of the structure's already in there to support a lot of that.
+General redesign of the entire product.  Apart from decreased memory use, what makes this product better to use than a spreadsheet?  Change project away from assignment requirements towards user utility, get some users to give feedback on design and use over some months, suggest features, etc.
 
-Control flow's a little odd.  If I filter a list for multiple categories, then it makes sense I want to view all items that are in one of those categories.  If I filter a list for multiple categories and multiple statuses, though, do I want items that are in one of those categories *or* one of those statuses?  Or do I want items that are in one of those categories *and* one of those statuses?  How do I even represent that in filter terms, where the user doesn't have to reference logic tables and can enter filter commands with ease?  Had I some more time, I think I'd look at how spreadsheets use filters some more, see how they handle it.
+Make more dynamic, add ability to add custom fields per task, change customization of dropdowns.  Include standalone field, perhaps, for extended user filtering using "and" and "or" and user-specified number of fields, change "category" to accept multiple comma separated arguments.  All keeping in mind ease of use and simple presentation.
 
-Probably have to make a standalone field to hold / edit filter queries too, come to think on it.  Especially if I allow users to add custom fields to tasks.
+CSS styling, control flow.
+
+Selection of animations for user to customize look.
+
+Import and export data.
 
 ## Resources
 
