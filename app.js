@@ -1,3 +1,8 @@
+/**
+ * Note to self:  Use a form that does NOT use event.preventDefault() to pass arguments
+ * to URL that may be copied and pasted.  Look into tinyurl - including designing own tinyurl.
+ */
+
 const formAddTask = document.getElementById('formAddTask');
 const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
@@ -9,13 +14,21 @@ let filterStates2 = {task: "", category: ""};
 const output1 = document.getElementById('output1');
 const output2 = document.getElementById('output2');
 
+/**
+ * Adds event listener to "Clear localStorage" button.
+ */
 clearData.addEventListener('click', (event) => {
   localStorage.clear();
 });
 
+/**
+ * Adds event listener to "Add Task" form's submit button.
+ * Used FormData rather than .value reference.  Note "qs..." query string.
+ * I think another identifier doesn't use qs.  Look into it.
+ */
 formAddTask.addEventListener('submit', (event) => {
   event.preventDefault();
-  // Prevents page reloading, and arguments going to query strings in URL.  Work on a process that uses query strings too.
+  // Prevents page reloading and arguments going to query strings in URL.
   const formATData = new FormData(formAddTask);
   const task = formATData.get('qstask');
   const category = formATData.get('qscategory');
@@ -68,6 +81,12 @@ const clearTable = () => {
   taskTable.textContent = "";
 }
 
+/**
+ * @param {*} arrayInput is the tasklist, an array of objects.
+ * @param {*} arrayKeyInputs is an array of strings, such as ["Category", "Status"]
+ * @returns returnObject, an object with keys corresponding to arrayKeyInput values.  Value of each key is an array containing strings pulled from arrayInput's objects with the corresponding key.
+ * For example, if arrayInput had ten items that fit into four unique categories, returnObject would be {category: [a four element array]}.
+ */
 const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   const returnObject = {};
   for (let i = 0; i < arrayKeyInputs.length; i++) {
@@ -84,7 +103,10 @@ const getUniqueElementsInArrayOfObjects = (arrayInput, arrayKeyInputs) => {
   return returnObject;
 }
 
-
+/**
+ * Note difference between "Category" and "category" can be confusing, should switch out.
+ * "mrDrop" is not terribly descriptive.  Rework later.
+ */
 const addTableHeaders = () => {
   const tableHeaderRow = document.createElement("tr");
   for (let i = 0; i < labels.length; i++) {
@@ -105,6 +127,12 @@ const addTableHeaders = () => {
   taskTable.appendChild(tableHeaderRow);
 }
 
+/**
+ * @param {*} arrayInput an array of unique elements found in a column.
+ * @param {*} type column header, e.g. "Category"
+ * @param {*} defaultOption the default option in the HTML select element.  If argument is passed assumes that value, otherwise defaults to "All".  Initial value of a select is set to the first option by default.
+ * @returns an HTML "select" element
+ */
 const createDropdown = (arrayInput, type, defaultOption="All") => {
   const dropdown = document.createElement("select");
   const all = document.createElement("option");
@@ -167,6 +195,12 @@ const createDropdown2 = (arrayInput, columnName, index) => {
   return dropdown2;
 }
 
+/**
+ * @param {*} tasklistInput the tasklist.  Passed as an argument as it might be a filtered list passed in a future implementation.
+ * @param {*} arrayOfObjects an array of objects to be filtered upon.
+ * This function generates a Set of unique indices that is used to create a filtered array from the tasklist.
+ * @returns a filtered array.  This is used to generate a tasklist.
+ */
 const getFilteredArray = (tasklistInput, arrayOfObjects) => {
   const setOfIndices = new Set();
   const filteredArray = [];
@@ -188,10 +222,14 @@ const getFilteredArray = (tasklistInput, arrayOfObjects) => {
   return filteredArray;
 };
 
+/**
+ * @param {*} dateInput a task's deadline.
+ * @returns a boolean; true if task is overdue, false otherwise.
+ */
 const isOverdue = (dateInput) => {
   const today = new Date();
   const taskdate = new Date(dateInput)
-  output2.textContent = `task: ${taskdate}, today: ${today}`;
+ // output2.textContent = `task: ${taskdate}, today: ${today}`;
   if (today > taskdate) {
     return true;
   } else {
@@ -199,6 +237,11 @@ const isOverdue = (dateInput) => {
   }
 }
 
+/**
+ * @param {*} taskObjectParameter A task object from the tasklist.
+ * @param {*} index The index of the tasklist the above task object is at.
+ * Adds a row to the tasklist.
+ */
 const addTableTask = (taskObjectParameter, index) => {
   const tableRow = document.createElement("tr");
   const task = document.createElement("td");
@@ -225,6 +268,10 @@ const addTableTask = (taskObjectParameter, index) => {
   taskTable.appendChild(tableRow);
 }
 
+/**
+ * @param {*} arrayOfTaskObjects the tasklist, or a filtered tasklist.
+ * Calls various other functions to generate the table of tasks.
+ */
 const fillTable = (arrayOfTaskObjects) => {
   clearTable();
   addTableHeaders();
@@ -252,7 +299,3 @@ document.addEventListener("DOMContentLoaded", function() {
  * Note 3:  Add 
  * 
  */
-
-
-
-
