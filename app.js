@@ -207,7 +207,7 @@ const addTableTask = (taskObjectParameter, index) => {
   const status = document.createElement("td");
   if (isOverdue(taskObjectParameter.deadline)) {
     taskObjectParameter.status = "Overdue";
-    tasklist[index].deadline = "Overdue";
+    tasklist[index].status = "Overdue";
   }
   status.textContent = taskObjectParameter.status;
   const dropdown2 = createDropdown2(tasklist, "status", index);
