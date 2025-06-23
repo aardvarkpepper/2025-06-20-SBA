@@ -33,7 +33,7 @@ const addTask = (task) => {
     const today = new Date();
     task.deadline = today;
   }
-  if (isOverdue(task.deadline)) {
+  if (isOverdue(task.deadline) && task.status === "In Progress") {
     task.status = "Overdue";
   }
   tasklist.push(task);
@@ -183,8 +183,10 @@ const getFilteredArray = (tasklistInput, arrayOfObjects) => {
 
 const isOverdue = (dateInput) => {
   const today = new Date();
-  output2.textContent = `task: ${dateInput}, today: ${today}`;
-  if (today > dateInput) {
+  const taskdate = new Date(dateInput)
+  output2.textContent = `task: ${taskdate}, today: ${today}`;
+  console.log(`isOverdue testing ${today} and ${taskdate}; ${today > taskdate}`)
+  if (today > taskdate) {
     return true;
   } else {
     return false;
@@ -205,10 +207,17 @@ const addTableTask = (taskObjectParameter, index) => {
   deadline.textContent = taskObjectParameter.deadline;
   tableRow.appendChild(deadline);
   const status = document.createElement("td");
-  if (isOverdue(taskObjectParameter.deadline)) {
+  // If someone wants to mark something overdue when it isn't, perhaps they have their reasons.
+  // So no additional handling to correct overdue to in progress.
+  console.log(`For ${taskObjectParameter.task}, boolean is ${isOverdue(taskObjectParameter.deadline)}`)
+  if (isOverdue(taskObjectParameter.deadline) && taskObjectParameter.status === "In Progress") {
+    if (taskObjectParameter.task === "hamster care") {
+      console.log(`Triggered hamster care.`)
+    }
     taskObjectParameter.status = "Overdue";
     tasklist[index].status = "Overdue";
   }
+  console.log(`Attempting to generate for ${taskObjectParameter.task}, ${taskObjectParameter.category}, ${taskObjectParameter.deadline}, ${taskObjectParameter.status}.`);
   status.textContent = taskObjectParameter.status;
   const dropdown2 = createDropdown2(tasklist, "status", index);
   status.appendChild(dropdown2);
@@ -228,13 +237,15 @@ const fillTable = (arrayOfTaskObjects) => {
 }
 
 /**
- * 
+ * fix date issue - new inputs correctly update status to overdue if past date.
+ * But first, if it is entered as "Complete", will toggle to "Overdue".  No good.
+ * Second, existing datad oes not update.
  * persist task data using local storage
  * 
  */
 
 const task1 = {
-  task: "hamster care",
+  task: "hamster care 2",
   category: "Work",
   deadline: "2025-06-19",
   status: "In Progress",
@@ -244,14 +255,14 @@ const task2 = {
   task: "past care",
   category: "Pastries",
   deadline: "2024-01-02",
-  status: "Overdue",
+  status: "In Progress", // In Progress
 };
 
 const task3 = {
   task: "hamster care",
   category: "Work",
   deadline: "2028-11-12",
-  status: "Overdue",
+  status: "Complete", // Overdue
 };
 
 const task4 = {
