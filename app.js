@@ -279,9 +279,10 @@ tasklist.push(task4);
 
 
 
-// document.addEventListener("DOMContentLoaded", function() {
-//   // hamsterwords.textContent = "On load test successful";
-// });
+document.addEventListener("DOMContentLoaded", function() {
+  fillTable(tasklist);
+  // hamsterwords.textContent = "On load test successful";
+});
 
 // localStorage.setItem("myData", tasklist);
 
