@@ -3,6 +3,7 @@ const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
 const tasklist = [];
 const filterStates = {task: "All", category: "All"};
+const filterStates2 = {task: "", category: ""};
 
 const output1 = document.getElementById('output1');
 const output2 = document.getElementById('output2');
@@ -128,6 +129,36 @@ const createDropdown = (arrayInput, type, defaultOption="All") => {
   return dropdown;
 }
 
+// here arrayInput is the array of strings of unique elements in the column.
+// e.g. ["In Progress", "Complete", "Overdue"];
+// defaultOption is whatever default select is.  e.g. "In Progress".  Note this CHANGES
+// for status, say, but this should not be an issue, as we're reading it off data.
+// Status update based on date triggers on input and read (is this still true? I forget)
+// Should be.  Because input on Sunday could be read on Monday, then the data would be archived
+// and would need to be updated.  Anyways, the read is made after the element exists.
+const createDropdown2 = (arrayInput, columnName, index) => {
+  const dropdown2 = document.createElement("select");
+  const valuesArray = ["In Progress", "Complete", "Overdue"];
+  //const objectStorage = getUniqueElementsInArrayOfObjects(tasklist, ["category", "status"]);
+  //console.log(`CD2 ${objectStorage[columnName]}, ${objectStorage[columnName].length}`)
+  for (let i = 0; i < valuesArray.length; i++) {
+    const option2 = document.createElement("option");
+    option2.value = valuesArray[i];
+    option2.textContent = valuesArray[i];
+    dropdown2.appendChild(option2);
+  }
+
+  dropdown2.value = tasklist[index].status;
+
+  dropdown2.addEventListener('change', (event) => {
+    const dropdown2value = event.target.value;
+    tasklist[index].status = dropdown2value;
+    fillTable(tasklist);
+  })
+  return dropdown2;
+}
+
+
 
 const getFilteredArray = (tasklistInput, arrayOfObjects) => {
   const setOfIndices = new Set();
@@ -166,7 +197,9 @@ const addTableTask = (taskObjectParameter, index) => {
   task.textContent = taskObjectParameter.task;
   tableRow.appendChild(task);
   const category = document.createElement("td");
+  //const selectCategory = createDropdown2(tasklist, "category");
   category.textContent = taskObjectParameter.category;
+  // category.appendChild(selectCategory);
   tableRow.appendChild(category);
   const deadline = document.createElement("td");
   deadline.textContent = taskObjectParameter.deadline;
@@ -176,8 +209,9 @@ const addTableTask = (taskObjectParameter, index) => {
     taskObjectParameter.status = "Overdue";
     tasklist[index].deadline = "Overdue";
   }
-
   status.textContent = taskObjectParameter.status;
+  const dropdown2 = createDropdown2(tasklist, "status", index);
+  status.appendChild(dropdown2);
   tableRow.appendChild(status);
   taskTable.appendChild(tableRow);
 }
@@ -245,6 +279,11 @@ tasklist.push(task4);
  * 
  * Update the status of tasks to reflect their progress (e.g., “In Progress,” “Completed,” “Overdue”).
  * via dropdown or button.  Tasklist should update when this is done.
+ * 
+ * Inside each row of the table, I have dropdowns with an onChange event listener. When it is changed,
+ * the data is updated in js then the table re-rendered.  I expect filters should stay.
+ * 
+ * 
  * Persist task data using local storage so tasks are saved even after refreshing the page.
  */
 
