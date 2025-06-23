@@ -1,12 +1,17 @@
 const formAddTask = document.getElementById('formAddTask');
 const labels = formAddTask.querySelectorAll("label");
 const taskTable = document.getElementById('taskTable');
+const clearData = document.getElementById('cleardata');
 let tasklist = [];
 let filterStates = {task: "All", category: "All"};
 let filterStates2 = {task: "", category: ""};
 
 const output1 = document.getElementById('output1');
 const output2 = document.getElementById('output2');
+
+clearData.addEventListener('click', (event) => {
+  localStorage.clear();
+});
 
 formAddTask.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -241,6 +246,10 @@ document.addEventListener("DOMContentLoaded", function() {
  * localStorage.clear();
  * 
  * then attempt again.
+ * 
+ * Note 2:  After clearing data, now table generates with header only.  This is not intended behavior.
+ * 
+ * Note 3:  Add 
  * 
  */
 
