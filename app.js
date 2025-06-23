@@ -320,6 +320,13 @@ document.addEventListener("DOMContentLoaded", function() {
  * 
  * 
  * Persist task data using local storage so tasks are saved even after refreshing the page.
+ * 
+ * Note:  After closing server and re-opening, data persists and error does not recur.  This is expected.  To replicate error, though, must clear data with
+ * 
+ * localStorage.clear();
+ * 
+ * then attempt again.
+ * 
  */
 
 
